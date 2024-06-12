@@ -11,6 +11,10 @@ namespace src.Models
         public DateTime Date { get; set; }
         public DateTime DatePaid { get; set; }
         public bool IsPaid { get; set; }
-        public IEnumerable<BillDetails>? BillDetails { get; set; }
+        [Required]
+        public IEnumerable<ServicesBases> ServicesBases { get; set; } = null!;
+
+        [Required]
+        public IEnumerable<ServicesCustom> ServicesCustoms { get; set; } = null!;
     }
 }

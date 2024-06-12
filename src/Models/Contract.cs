@@ -4,15 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace src.Models
 {
-    [Index(nameof(Customer))]
-    [Index(nameof(Room))]
     public class Contract
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public DateTime Date_Hire { get; set; }
+        public DateTime DateHire { get; set; }
         [Required]
         public DateTime ExpirationDate { get; set; }
         [Required]

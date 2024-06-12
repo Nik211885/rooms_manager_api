@@ -12,26 +12,14 @@ namespace src.Models
 
         [Required]
         [MaxLength(50),MinLength(5)]
-        public string User_name { get; set; } = null!;
+        public string UserName { get; set; } = null!;
         [Required]
         public byte[] PasswordHash { get; set; } = null!;
-        public string Role { get; set; } = "user";
+        public string Role { get; set; } = null!;
         [Required]
-        [MaxLength(100)]
-        public string Address { get; set; } = null!;
+        public IEnumerable<ServicesBases> ServicesBases { get; set; } = null!;
+
         [Required]
-        [MaxLength(10)]
-        [RegularExpression("/(0[3|5|7|8|9])+([0-9]{8})\b/g")]
-        public string Phone { get; set; } = null!;
-        [Required]
-        [MaxLength(50),MinLength(5)]
-        public string FullName { get; set; } = null!;
-        [MaxLength(11),MinLength(11)]
-        [RegularExpression("^\\d$")]
-        public string IdNumber { get; set; } = null!;
-        [MaxLength(80)]
-        public string? Image { get; set; }
-        public bool Gender { get; set; }
-        public DateTime BirthDay { get; set; }
+        public IEnumerable<ServicesCustom> ServicesCustoms { get; set; } = null!;
     }
 }
