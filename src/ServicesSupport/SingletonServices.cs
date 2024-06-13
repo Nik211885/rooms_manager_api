@@ -7,7 +7,7 @@ namespace src.ServicesSharedSupport
 {
     public class SingletonServices
     {
-        private static IEnumerable<ServiceSupport>? _servicesShared;    
+        private static IEnumerable<ServiceSupport>? _servicesSupport;    
         private SingletonServices() { }
         /// <summary>
         ///     This function create one instance admin support services 
@@ -18,11 +18,11 @@ namespace src.ServicesSharedSupport
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static IEnumerable<ServiceSupport>? GetIntentServicesProvide(RoomsManagerDbConText dbContext)
         {
-            if(_servicesShared == null)
+            if(_servicesSupport == null)
             {
-                _servicesShared = dbContext.ServicesSupport.Where(x=>!x.Deleted).ToList();
+                _servicesSupport = dbContext.ServicesSupport.Where(x=>!x.Deleted).ToList();
             }
-            return _servicesShared;
+            return _servicesSupport;
         }
 
     }

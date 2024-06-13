@@ -23,10 +23,6 @@ namespace src.Models
         [MaxLength(100)]
         public string Address { get; set; } = null!;
         [Required]
-        [MaxLength(10)]
-        [RegularExpression("/(0[3|5|7|8|9])+([0-9]{8})\b/g")]
-        public string Phone { get; set; } = null!;
-        [Required]
         [MaxLength(50), MinLength(5)]
         public string FullName { get; set; } = null!;
         [Required]
@@ -46,6 +42,6 @@ namespace src.Models
         public IEnumerable<Message>? Message { get; set; }
         public IEnumerable<Notify>? Notify { get; set; }
         public IEnumerable<Bill>? Bills { get; set; }
-        public IEnumerable<ServiceSupport> ServicesProvider { get; set; } = null!;
+        public IEnumerable<ServiceSupport> ServicesSupport { get; set; } = null!;
     }
 }

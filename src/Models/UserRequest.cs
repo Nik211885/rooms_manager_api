@@ -5,12 +5,10 @@ namespace src.Models
     public class UserRequest
     {
         [Required]
-        [MaxLength(50), MinLength(5)]
-        public string UserName { get; set; } = null!;
+        [RegularExpression("([\\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{7})\\b")]
+        public string Phone { get; set; } = null!;
         [Required]
-        [RegularExpression("/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)(?!.* ).{6,16}$/")]
+        [RegularExpression("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")]
         public string Password { get; set; } = null!;
-        [Required]
-        public string Role { get; set; } = null!;
     }
 }

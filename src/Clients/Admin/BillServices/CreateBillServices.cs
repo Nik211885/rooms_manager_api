@@ -19,8 +19,8 @@ namespace src.Clients.Admin.BillServices
         {
             if (_dbContext != null && _servicesSupport != null && _customerId >0)
             {
+                _customerId = customerId;
                 var billServices = new BillsCollectionServices(_dbContext,_customerId);
-                _customerId = customerId;   
                 await AddServices.AddServicesToBillServicesAsync(billServices, _dbContext, _customerId, _servicesSupport, date);
                 return billServices;
             }

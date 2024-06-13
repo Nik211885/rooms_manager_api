@@ -66,11 +66,6 @@ namespace src.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -189,11 +184,6 @@ namespace src.Migrations
                     b.Property<string>("Image")
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -364,9 +354,6 @@ namespace src.Migrations
                     b.Property<int>("ServiceSupportId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BillId");
@@ -374,8 +361,6 @@ namespace src.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("ServiceSupportId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("ServicesBases");
                 });
@@ -403,9 +388,6 @@ namespace src.Migrations
                     b.Property<int>("ServicesSupportId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BillId");
@@ -413,8 +395,6 @@ namespace src.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("ServicesSupportId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("ServicesCustoms");
                 });
@@ -427,20 +407,22 @@ namespace src.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<byte[]>("PasswordHash")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("Phone")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -529,7 +511,7 @@ namespace src.Migrations
             modelBuilder.Entity("src.Models.ServiceSupport", b =>
                 {
                     b.HasOne("src.Models.Admin", null)
-                        .WithMany("ServicesProvider")
+                        .WithMany("ServicesSupport")
                         .HasForeignKey("AdminId");
                 });
 
@@ -548,10 +530,6 @@ namespace src.Migrations
                         .HasForeignKey("ServiceSupportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("src.Models.User", null)
-                        .WithMany("ServicesBases")
-                        .HasForeignKey("UserId");
 
                     b.Navigation("ServiceSupport");
                 });
@@ -572,10 +550,6 @@ namespace src.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("src.Models.User", null)
-                        .WithMany("ServicesCustoms")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("ServicesSupport");
                 });
 
@@ -591,7 +565,7 @@ namespace src.Migrations
 
                     b.Navigation("Rooms");
 
-                    b.Navigation("ServicesProvider");
+                    b.Navigation("ServicesSupport");
                 });
 
             modelBuilder.Entity("src.Models.Bill", b =>
@@ -607,13 +581,6 @@ namespace src.Migrations
 
                     b.Navigation("Message");
 
-                    b.Navigation("ServicesBases");
-
-                    b.Navigation("ServicesCustoms");
-                });
-
-            modelBuilder.Entity("src.Models.User", b =>
-                {
                     b.Navigation("ServicesBases");
 
                     b.Navigation("ServicesCustoms");

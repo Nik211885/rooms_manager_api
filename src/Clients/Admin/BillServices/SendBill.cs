@@ -9,35 +9,27 @@ namespace src.Clients.Admin.BillServices
 {
     public class SendBill : ISendBill
     {
-        private RoomsManagerDbConText _dbContext;
-        private int _adminId;
-        public SendBill(RoomsManagerDbConText dbContext, int adminId)
+        public async Task SendAllBillInMonthAsync(int senderId, RoomsManagerDbConText dbContext, DateTime dateSendBill)
         {
-            _dbContext = dbContext;
-            _adminId = adminId;
-        }
-
-        public async Task SendAllBillInMonthAsync(int senderId)
-        {
-            var createBill = new CreateBillServices(_dbContext);
-            ISaveMessage saveMss = new SystemSaveMessage(_dbContext);
-            var customersId = await _dbContext.Customer.Where(c=>!c.Deleted).Select(c=>c.Id).ToListAsync();
+            var createBill = new CreateBillServices(dbContext);
+            ISaveMessage saveMss = new SystemSaveMessage();
+            BillsCollectionServices? billServices;
+            var customersId = await dbContext.Customer.Where(c=>!c.Deleted).Select(c=>c.Id).ToListAsync();
             foreach(var c in customersId)
             {
-                var billServices = await createBill.GetBillServices(c, DateTime.Now);
+                billServices = await createBill.GetBillServices(c, dateSendBill);
                 var mss = billServices.GetInformationBill();
-                await saveMss.SaveMessage(_adminId, c, mss);
+                await saveMss.SaveMessage(senderId, c, mss,dbContext);
             }
 
         }
-
-        public async Task SendBillMonthAsync(int senderId, int receiverId, DateTime dateSendBill)
+        public async Task SendBillMonthAsync(int senderId, int receiverId, DateTime dateSendBill, RoomsManagerDbConText dbContext)
         {
-            var createBill = new CreateBillServices(_dbContext);
+            var createBill = new CreateBillServices(dbContext);
             var billServices = await createBill.GetBillServices(receiverId,dateSendBill);
             var message = billServices.GetInformationBill();
-            ISaveMessage saveMss = new SystemSaveMessage(_dbContext);
-            await saveMss.SaveMessage(_adminId,billServices.GetCustomerId(),message);
+            ISaveMessage saveMss = new SystemSaveMessage();
+            await saveMss.SaveMessage(senderId,receiverId,message, dbContext);
         }
     }
 }
