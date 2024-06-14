@@ -3,7 +3,7 @@ using src.Clients.ServicesShared;
 using src.Collection;
 using src.Collection.Admin;
 using src.Data;
-using src.Services.BillsServices;
+using src.Services.Admin.BillsServices;
 
 namespace src.Clients.Admin.BillServices
 {

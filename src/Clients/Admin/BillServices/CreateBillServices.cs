@@ -1,6 +1,6 @@
 ﻿using src.Data;
 using src.Models;
-using src.Services.BillsServices;
+using src.Services.Admin.BillsServices;
 using src.ServicesSharedSupport;
 
 namespace src.Clients.Admin.BillServices

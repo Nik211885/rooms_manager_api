@@ -3,7 +3,7 @@ using src.BillCollections;
 using src.Data;
 using src.Models;
 
-namespace src.Services.BillsServices
+namespace src.Services.Admin    .BillsServices
 {
     public class AddServices
     {

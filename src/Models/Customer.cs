@@ -19,12 +19,12 @@ namespace src.Models
         public string FullName { get; set; } = null!;
         [Required]
         [MaxLength(11), MinLength(11)]
-        [RegularExpression("^\\d$")]
+        [RegularExpression("^[0-9]*$")]
         public string IdNumber { get; set; } = null!;
         [MaxLength(80)]
-        public string? Image { get; set; } = null!;
-        public bool Gender { get; set; }
-        public DateTime BirthDay { get; set; }
+        public string? Image { get; set; }
+        public Nullable<bool> Gender { get; set; } 
+        public Nullable<DateTime> BirthDay { get; set; } 
 
         public IEnumerable<Message>? Message { get; set; }
         public IEnumerable<Bill>? Bills { get; set; }

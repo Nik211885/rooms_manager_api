@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using src.Clients.Admin.BillServices;
 using src.Data;
 
-namespace src.Controllers.Admin.BillServices
+namespace src.Controllers.Admin
 {
     [Route("api/[controller]")]
     [ApiController]

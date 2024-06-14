@@ -27,7 +27,7 @@ namespace src.Models
         public string FullName { get; set; } = null!;
         [Required]
         [MaxLength(11), MinLength(11)]
-        [RegularExpression("^\\d$")]
+        [RegularExpression("^[0-9]*$")]
         public string IdNumber { get; set; } = null!;
         [Required]
         [MaxLength(80)]

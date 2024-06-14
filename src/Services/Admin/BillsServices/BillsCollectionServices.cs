@@ -2,7 +2,7 @@
 using src.Data;
 using System.Text;
 
-namespace src.Services.BillsServices
+namespace src.Services.Admin.BillsServices
 {
     public class BillsCollectionServices : IBillCollection
     {
