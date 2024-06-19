@@ -1,33 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PasswordGenerator;
+﻿using PasswordGenerator;
 using src.Data;
 using src.Models;
 using src.Until;
+using System.Dynamic;
 using BC = BCrypt.Net;
 
-namespace src.Services.Admin.ManageUser
+namespace src.Clients.Admin.ManageUser
 {
-    public class CreateCustomer : ControllerBase, ICreateCustomer
+    public class CreateCustomer : ICreateCustomer
     {
         private readonly RoomsManagerDbConText _dbContext;
         public CreateCustomer(RoomsManagerDbConText dbContext)
         {
             _dbContext = dbContext;
         }
-        public async Task<ActionResult<string>> CreateCustomerAsync(RegristCustomer customer)
+        public async Task<dynamic> CreateCustomerAsync(RegristCustomer customer)
         {
             if (customer == null)
             {
-                return BadRequest("Customer not null");
+                return "Customer not null";
             }
-            var val = new ValidateUser(_dbContext);
-            if (!await val.IsPhoneUnique(customer))
+            //1> If phone number is exits return 
+            //2> If idNumber is exits return if you want change status deleted search customer by idNumber and change status deleted
+            var valC = new ValidateCustomer(_dbContext);
+            var valU = new ValidateUser(_dbContext);
+            if (!await valU.IsPhoneUnique(customer))
             {
-                return BadRequest("Phone number must is unique");
+                return "This phone has regrist before";
             }
-            if (!await val.IsIdNumberUnique(customer))
+            if (!await valC.IsIdNumberUnique(customer))
             {
-                return BadRequest("Id number must unique");
+                return "This person has regrist before";
             }
             var pwd = new Password(
                 includeLowercase: true, 
@@ -53,7 +56,12 @@ namespace src.Services.Admin.ManageUser
             };
             await _dbContext.Customer.AddAsync(NewCustomer);
             await _dbContext.SaveChangesAsync();
-            return randomPassword;
+            //Feature in future extensible if admin regrist new customer can send send random password 
+            //for email or phone
+            dynamic account = new ExpandoObject();
+            account.UserName = customer.Phone;
+            account.Password = randomPassword;
+            return account;
         }
     }
 }

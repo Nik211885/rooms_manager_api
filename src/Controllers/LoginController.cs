@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using src.Data;
 using src.Models;
 using src.Services.ServicesShared.Login;
-using src.Until;
-using System.Runtime.Remoting;
 
 namespace src.Controllers
 {
@@ -20,8 +17,12 @@ namespace src.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginAsync([FromBody] UserRequest user)
         {
-            var jwt = await _login.ServiceLoginAsync(user);
-            return Ok(jwt);
+            var result = await _login.ServiceLoginAsync(user);
+            if(result.GetType() == typeof(string))
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }

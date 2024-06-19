@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using src.Models;
 
-namespace src.Services.Admin.ManageUser
+namespace src.Clients.Admin.ManageUser
 {
     public interface ICreateCustomer
     {
-        Task<ActionResult<string>> CreateCustomerAsync(RegristCustomer customer);
+        Task<dynamic> CreateCustomerAsync(RegristCustomer customer);
     }
 }

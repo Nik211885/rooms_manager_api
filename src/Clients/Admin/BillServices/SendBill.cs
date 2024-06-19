@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using src.Clients.ServicesShared;
+using src.Services.ServicesShared.MessageServices;
 using src.Collection;
 using src.Collection.Admin;
 using src.Data;

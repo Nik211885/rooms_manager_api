@@ -1,8 +1,7 @@
 ﻿using src.Collection;
 using src.Data;
 using src.Models;
-
-namespace src.Clients.ServicesShared
+namespace src.Services.ServicesShared.MessageServices
 {
     public class SystemSaveMessage : ISaveMessage
     {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using src.Models;
 
 namespace src.Data
@@ -17,5 +18,13 @@ namespace src.Data
         public DbSet<ServiceSupport> ServicesSupport { get; set; } 
         public DbSet<Room> Rooms { get; set; }  
         public DbSet<Notify> Notifies { get; set; }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Room>()
+        //    .Property(b => b.Status)
+        //    .HasConversion(
+        //       v => JsonConvert.SerializeObject(v),
+        //       v => JsonConvert.DeserializeObject<Dictionary<string, bool>>(v));
+        //}
     }
 }

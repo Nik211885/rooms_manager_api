@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using src.Data;
 using src.Models;
 using src.Until;
+using System.Dynamic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace src.Services.ServicesShared.Login
 {
-    public class LoginServices : ControllerBase, ILogin
+    public class LoginServices : ILogin
     {
         private readonly RoomsManagerDbConText _dbContext;
         private readonly IConfiguration _configuration;
@@ -20,22 +19,24 @@ namespace src.Services.ServicesShared.Login
             _configuration = configuration; 
 
         }
-        public async Task<ActionResult<string>> ServiceLoginAsync(UserRequest user)
+        public async Task<dynamic> ServiceLoginAsync(UserRequest user)
         {
             if (user == null)
             {
-                return BadRequest("User don't empty");
+                return "User don't empty";
             }
             var val = new ValidateUser(_dbContext);
             var result = await val.GetUserAsync(user);
             var type = result.GetType();
             if (type == typeof(string))
             {
-                return BadRequest(result);
+                return result;
             }
-            return GetJwtToke(result, _configuration);    
+            dynamic jwt = new ExpandoObject();
+            jwt.JwtToken = GetJwtToke(result, _configuration);
+            return jwt;
         }
-        private string GetJwtToke(User user, IConfiguration config)
+        private static string GetJwtToke(User user, IConfiguration config)
         {
             var claims = new List<Claim>()
             {

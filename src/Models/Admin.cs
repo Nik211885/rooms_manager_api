@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,6 +10,7 @@ namespace src.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [ReadOnly(true)]
         public int Id { get; set; }
         public User User { get; set; } = null!;
         [Required]
@@ -42,6 +44,6 @@ namespace src.Models
         public IEnumerable<Message>? Message { get; set; }
         public IEnumerable<Notify>? Notify { get; set; }
         public IEnumerable<Bill>? Bills { get; set; }
-        public IEnumerable<ServiceSupport> ServicesSupport { get; set; } = null!;
+        public IEnumerable<ServiceSupport>? ServicesSupport { get; set; }
     }
 }

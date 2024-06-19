@@ -1,12 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace src.Models
 {
+    [Index(nameof(NameRoom), IsUnique = true)]
     public class Room
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [ReadOnly(true)]
         public int Id { get; set; }
         [Required]
         [MaxLength(50)]

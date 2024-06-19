@@ -6,6 +6,6 @@ namespace src.Services.ServicesShared.Login
 {
     public interface ILogin
     {
-        Task<ActionResult<string>> ServiceLoginAsync(UserRequest user);
+        Task<dynamic> ServiceLoginAsync(UserRequest user);
     }
 }

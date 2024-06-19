@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace src.Models
 {
@@ -6,6 +8,8 @@ namespace src.Models
     {
         [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [ReadOnly(true)]
         public int Id { get; set; }
         [Required]
         public string NameServices { get; set; } = null!;
